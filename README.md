@@ -15,13 +15,13 @@ arquivo CSV e tem por objetivo apresentar os pontos abaixo:
     Quais são as estações da base de dados?
 
 A base contém os seguintes campos: 
-    Start Time
-    End Time
-    Trip Duration
-    Start Station
-    End Station
-    User Type
-    Gender
+    Start Time,
+    End Time,
+    Trip Duration,
+    Start Station,
+    End Station,
+    User Type,
+    Gender,
     Birth Year 
 
 Com os campos delimitados por vírgula. 
