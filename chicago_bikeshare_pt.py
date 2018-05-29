@@ -5,16 +5,16 @@ import csv
 import matplotlib.pyplot as plt
 
 # TAREFA 3
-"""
-    Função que transforma o resultado de uma das colunas em uma nova lista
-      Argumentos:
-          data: recebe a lista utilizada como origem.
-          index: recebe a coluna que deverá ser utilizada como referência.
-      Retorna:
-          Retorna uma nova lista contendo apenas os valores da coluna referenciada
-          através do argumento index.
-"""
 def column_to_list(data, index):
+    """
+        Função que transforma o resultado de uma das colunas em uma nova lista
+          Argumentos:
+              data: recebe a lista utilizada como origem.
+              index: recebe a coluna que deverá ser utilizada como referência.
+          Retorna:
+              Retorna uma nova lista contendo apenas os valores da coluna referenciada
+              através do argumento index.
+    """
     column_list = []
     # Dica: Você pode usar um for para iterar sobre as amostras, pegar a
     # feature pelo seu índice,e dar append para uma lista
@@ -23,45 +23,46 @@ def column_to_list(data, index):
     return column_list
 
 # TAREFA 5
-"""
-    Função que retorna a quantidade de generos presentes na lista passada como parâmetro
-      Argumentos:
-          data_list: recebe a lista utilizada como origem.
-      Retorna:
-          Retorna uma tupla com a quantidade de generos masculinos e femininos
-"""
 def count_gender(data_list):
+    """
+        Função que retorna a quantidade de generos presentes na lista passada como parâmetro
+          Argumentos:
+              data_list: recebe a lista utilizada como origem.
+          Retorna:
+              Retorna uma tupla com a quantidade de generos masculinos e femininos
+    """
     male = len([line[-2] for line in data_list if 'Male' == line[-2]])
     female = len([line[-2] for line in data_list if 'Female' == line[-2]])
     return [male, female]
 
 # TAREFA 6
-"""
-    Função retorna qual o genero mais prevalente
-      Argumentos:
-          data_list: recebe a lista utilizada como origem.
-      Retorna:
-          Retorna uma string informando qual o genero mais prevalente
-"""
 def most_popular_gender(data_list):
-    if count_gender(data_list)[0] > count_gender(data_list)[1]:
+    """
+        Função retorna qual o genero mais prevalente
+          Argumentos:
+              data_list: recebe a lista utilizada como origem.
+          Retorna:
+              Retorna uma string informando qual o genero mais prevalente
+    """
+    male, female = count_gender(data_list)
+    if male > female:
         answer = "Masculino"
-    elif count_gender(data_list)[0] == count_gender(data_list)[1]:
+    elif male == female:
         answer = "Igual"
     else:
         answer = "Feminino"
     return answer
 
-"""
-    Função que identifica os valores únicos em uma lista passada por parâmetro
-    e a quantidade de vezes que aquele valor se repete
-    Argumentos
-        column_list: lista em que os valores são identificados e contados
-    retorna
-        lista com os valores únicos e com a contagem de repetição deste valor
-        na lista
-"""
 def count_items(column_list):
+    """
+        Função que identifica os valores únicos em uma lista passada por parâmetro
+        e a quantidade de vezes que aquele valor se repete
+        Argumentos
+            column_list: lista em que os valores são identificados e contados
+        retorna
+            lista com os valores únicos e com a contagem de repetição deste valor
+            na lista
+    """
     item_types = []
     count_items = []
     for column in column_list:
@@ -72,6 +73,24 @@ def count_items(column_list):
         count_items.append(column_list.count(item))
 
     return item_types, count_items
+
+def print_graph(y_position, x_label, y_label, title, quantity, types):
+    """
+        Função que imprime um gráfico de barra de acordo com os parametros passados
+        Argumentos
+            y_position:posicao do eixo Y
+            x_label: rótulo do eixo X
+            y_label: rótulo do eixo Y
+            title: Título do gráfico
+            quantity: Quantidade
+            types: Tipos a serem apresentados no gráfico
+    """
+    plt.bar(y_position, quantity)
+    plt.ylabel(y_label)
+    plt.xlabel(x_label)
+    plt.xticks(y_position, types)
+    plt.title(title)
+    plt.show(block=True)
 
 # Vamos ler os dados como uma lista
 print("Lendo o documento...")
@@ -102,8 +121,8 @@ data_list = data_list[1:]
 
 input("Aperte Enter para continuar...")
 print("\nTAREFA 2: Imprimindo o gênero das primeiras 20 amostras")
-for index in range(0, 20, 1):
-    print(data_list[index][-2])
+for line in data_list[:20]:
+    print(line[-2])
 
 input("Aperte Enter para continuar...")
 print("\nTAREFA 3: Imprimindo a lista de gêneros das primeiras 20 amostras")
@@ -149,12 +168,7 @@ gender_list = column_to_list(data_list, -2)
 types = ["Male", "Female"]
 quantity = count_gender(data_list)
 y_pos = list(range(len(types)))
-plt.bar(y_pos, quantity)
-plt.ylabel('Quantidade')
-plt.xlabel('Gênero')
-plt.xticks(y_pos, types)
-plt.title('Quantidade por Gênero')
-plt.show(block=True)
+print_graph(y_pos, 'Gênero', 'Quantidade', 'Quantidade por Gênero', quantity, types)
 
 input("Aperte Enter para continuar...")
 # TAREFA 7
@@ -163,12 +177,7 @@ print("\nTAREFA 7: Verifique o gráfico!")
 column_list = column_to_list(data_list, -3)
 types, counts = count_items(column_list)
 y_pos = list(range(len(types)))
-plt.bar(y_pos, counts)
-plt.ylabel('Quantidade')
-plt.xlabel('Tipos')
-plt.xticks(y_pos, types)
-plt.title('Quantidade por Tipos')
-plt.show(block=True)
+print_graph(y_pos, 'Tipos', 'Quantidade', 'Quantidade por Tipos de Usuários', counts, types)
 
 
 input("Aperte Enter para continuar...")
@@ -195,7 +204,7 @@ values = 0.
 new_trip_duration = [int (trip_duration) for trip_duration in trip_duration_list]
 new_trip_duration.sort()
 min_trip = new_trip_duration[0]
-max_trip = new_trip_duration[len(new_trip_duration)-1]
+max_trip = new_trip_duration[-1]
 for trip_duration in new_trip_duration:
     values += trip_duration
 
@@ -220,11 +229,7 @@ assert round(median_trip) == 670, "TAREFA 9: median_trip com resultado errado!"
 
 input("Aperte Enter para continuar...")
 # TAREFA 10
-user_types = set()
-
-start_station_list = column_to_list(data_list, 3)
-for start_station in start_station_list:
-    user_types.add(start_station)
+user_types = set(column_to_list(data_list, 3))
 
 print("\nTAREFA 10: Imprimindo as start stations:")
 print(user_types)
