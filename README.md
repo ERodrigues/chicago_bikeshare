@@ -13,3 +13,15 @@ arquivo CSV e tem por objetivo apresentar os pontos abaixo:
     Qual o motivo do número de homens e mulheres não bater com a quantidade de amostras?
     Qual o valor mínimo, máximo, média e mediana da duração de viagens?
     Quais são as estações da base de dados?
+
+A base contém os seguintes campos: 
+    Start Time
+    End Time
+    Trip Duration
+    Start Station
+    End Station
+    User Type
+    Gender
+    Birth Year 
+
+Com os campos delimitados por vírgula. 
